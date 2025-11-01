@@ -27,6 +27,7 @@
     "@mastra/libsql": "0.15.0",
     "@mastra/mcp": "^0.13.4",
     "@mastra/memory": "0.15.4",
+    "axios": "^1.13.1",
     "dotenv": "^17.2.3",
     "libsql": "^0.5.22",
     "mastra": "0.13.4",

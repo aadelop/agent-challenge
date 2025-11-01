@@ -1,5 +1,18 @@
 import { createTool } from '@mastra/core/tools';
 import { z } from 'zod';
+import { fetchStockTool } from './fetchStockTool';
+import { nosanaSubmitTool } from './nosanaSubmitTool';
+import { nosanaStatusTool } from './nosanaStatusTool';
+
+export { fetchStockTool, nosanaSubmitTool, nosanaStatusTool };
+
+export type FetchStockToolResult = z.infer<typeof FetchStockToolResultSchema>;
+
+const FetchStockToolResultSchema = z.object({
+  price: z.number(),
+  changePercent: z.number(),
+  asOf: z.string(),
+});
 
 interface GeocodingResponse {
   results: {
