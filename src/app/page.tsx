@@ -40,32 +40,41 @@ export default function CopilotKitPage() {
   );
 }
 
+
 function YourMainContent({ themeColor }: { themeColor: string }) {
   // 🪁 Shared State: https://docs.copilotkit.ai/coagents/shared-state
   const { state, setState } = useCoAgent<AgentState>({
-    name: "weatherAgent",
+    name: "stockAgent",
     initialState: {
       proverbs: [
-        "CopilotKit may be new, but its the best thing since sliced bread.",
+        "The stock market is a voting machine in the short run, but a weighing machine in the long run.",
       ],
     },
   })
 
-  //🪁 Generative UI: https://docs.copilotkit.ai/coagents/generative-ui
+  //🪁 Generative UI para fetchStockTool
   useCopilotAction({
-    name: "weatherTool",
-    description: "Get the weather for a given location.",
+    name: "fetchStockTool",
+    description: "Get the stock price for a given symbol.",
     available: "frontend",
     parameters: [
-      { name: "location", type: "string", required: true },
+      { name: "symbol", type: "string", required: true },
     ],
     render: ({ args, result, status }) => {
-      return <WeatherCard
-        location={args.location}
-        themeColor={themeColor}
-        result={result}
-        status={status}
-      />
+      return (
+        <div style={{ backgroundColor: themeColor }} className="rounded-xl shadow-xl mt-6 mb-4 max-w-md w-full p-4 text-white">
+          {status !== "complete" ? (
+            <p>Loading stock price for <b>{args.symbol}</b>...</p>
+          ) : (
+            <>
+              <h3 className="text-xl font-bold mb-2">Stock: {args.symbol}</h3>
+              <p>Price: <b>{result?.price}</b></p>
+              <p>Change: <b>{result?.changePercent}%</b></p>
+              <p>As of: <b>{result?.asOf}</b></p>
+            </>
+          )}
+        </div>
+      );
     },
   });
 
